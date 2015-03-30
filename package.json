@@ -1,0 +1,8 @@
+{
+  "name": "potion-audio",
+  "version": "1.0.0",
+  "description": "Abstraction above loading and playing audio files",
+  "main": "index.js",
+  "author": "Jan Sedivy <jansedivy@abdoc.net>",
+  "license": "MIT"
+}
