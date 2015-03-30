@@ -4,8 +4,6 @@ Abstraction above loading and playing sound, used in [Potion](https://github.com
 
 ## Installation
 
-### Browserify
-
 - `npm install potion-audio`
 
 ## Usage
