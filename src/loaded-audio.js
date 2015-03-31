@@ -26,9 +26,11 @@ LoadedAudio.prototype.fadeIn = function(value, time) {
   source.buffer = this._buffer;
 
   var gain = this._ctx.createGain();
-  gain.gain.value = 0;
-  gain.gain.exponentialRampToValueAtTime(0.001, 0);
-  gain.gain.exponentialRampToValueAtTime(value, time);
+
+  gain.gain.setValueAtTime(0, 0);
+  gain.gain.linearRampToValueAtTime(0.01, 0);
+  gain.gain.linearRampToValueAtTime(value, time);
+
   source.connect(this._masterGain);
   this._masterGain.connect(gain);
   gain.connect(this._ctx.destination);
