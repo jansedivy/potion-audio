@@ -32,6 +32,26 @@ potionAudio.load('/music/file.wav', function(audio) {
 
 ### API
 
+#### Manager
+
+Main object for loading sound files
+
+#### Methods
+
+##### .load(url, callback)
+
+Loads audio file
+
+**url** - which file to load
+
+**callback** - function which is called when the file is loaded, function is called with **Audio object** as the first argument
+
+##### .setVolume(volume)
+
+Sets master volume
+
+**volume** - positive number which sets the volume
+
 ---
 
 #### Audio object
