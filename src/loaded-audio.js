@@ -1,7 +1,8 @@
 var PlayingAudio = require('./playing-audio');
 
-var LoadedAudio = function(ctx, buffer) {
+var LoadedAudio = function(ctx, buffer, masterGain) {
   this._ctx = ctx;
+  this._masterGain = masterGain;
   this._buffer = buffer;
   this._buffer.loop = false;
 };
@@ -11,7 +12,8 @@ LoadedAudio.prototype.play = function() {
   source.buffer = this._buffer;
 
   var gain = this._ctx.createGain();
-  source.connect(gain);
+  source.connect(this._masterGain);
+  this._masterGain.connect(gain);
   gain.connect(this._ctx.destination);
 
   source.start(0);

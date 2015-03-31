@@ -4,6 +4,13 @@ var AudioManager = function() {
   var AudioContext = window.AudioContext || window.webkitAudioContext;
 
   this.ctx = new AudioContext();
+  this.masterGain = this.ctx.createGain();
+  this._volume = 1;
+};
+
+AudioManager.prototype.setVolume = function(volume) {
+  this._volume = volume;
+  this.masterGain.gain.value = volume;
 };
 
 AudioManager.prototype.load = function(url, callback) {
@@ -24,7 +31,7 @@ AudioManager.prototype.decodeAudioData = function(data, callback) {
   var self = this;
 
   this.ctx.decodeAudioData(data, function(result) {
-    var audio = new LoadedAudio(self.ctx, result);
+    var audio = new LoadedAudio(self.ctx, result, self.masterGain);
 
     callback(audio);
   });
