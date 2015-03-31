@@ -6,6 +6,27 @@ var AudioManager = function() {
   this.ctx = new AudioContext();
   this.masterGain = this.ctx.createGain();
   this._volume = 1;
+
+  var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+  if (iOS) {
+    this._enableiOS();
+  }
+};
+
+AudioManager.prototype._enableiOS = function() {
+  var self = this;
+
+  var touch = function() {
+    var buffer = self.ctx.createBuffer(1, 1, 22050);
+    var source = self.ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(self.ctx.destination);
+    source.start(0);
+
+    window.removeEventListener('touchstart', touch, false);
+  };
+
+  window.addEventListener('touchstart', touch, false);
 };
 
 AudioManager.prototype.setVolume = function(volume) {
