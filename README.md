@@ -20,6 +20,9 @@ potionAudio.load('/music/file.wav', function(audio) {
   // Looping
   audio.loop();
 
+  // Looping
+  audio.fadeIn(1, 2); // sets volume to 1 over 2 seconds
+
   // stopping immediately
   var current = audio.play();
   current.stop();
@@ -69,6 +72,15 @@ Starts playing the audio file from the start
 ##### .loop()
 
 Starts looping the audio file from the start
+
+**returns** PlayingAudio object
+
+##### .fadeIn(volume, time)
+
+Starts playing audio from the start, but slowly fades in volume
+
+**volume** - target volume
+**time** - total time in which the volume is slowly changed
 
 **returns** PlayingAudio object
 
