@@ -20,14 +20,14 @@ potionAudio.load('/music/file.wav', function(audio) {
   // Looping
   audio.loop();
 
-  // Looping
+  // Fading
   audio.fadeIn(1, 2); // sets volume to 1 over 2 seconds
 
-  // stopping immediately
+  // Stopping immediately
   var current = audio.play();
   current.stop();
 
-  // setting volume
+  // Setting volume
   var current = audio.play();
   current.setVolume(0.5); // makes the volume 2x more quiet
 });
