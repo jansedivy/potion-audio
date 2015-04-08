@@ -6,6 +6,7 @@ var AudioManager = function() {
   this.ctx = new AudioContext();
   this.masterGain = this.ctx.createGain();
   this._volume = 1;
+  this.isMuted = false;
 
   var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
   if (iOS) {
@@ -27,6 +28,25 @@ AudioManager.prototype._enableiOS = function() {
   };
 
   window.addEventListener('touchstart', touch, false);
+};
+
+AudioManager.prototype.mute = function() {
+  this.isMuted = true;
+  this._updateMute();
+};
+
+AudioManager.prototype.unmute = function() {
+  this.isMuted = false;
+  this._updateMute();
+};
+
+AudioManager.prototype.toggleMute = function() {
+  this.isMuted = !this.isMuted;
+  this._updateMute();
+};
+
+AudioManager.prototype._updateMute = function() {
+  this.masterGain.gain.value = this.isMuted ? 0 : this._volume;
 };
 
 AudioManager.prototype.setVolume = function(volume) {
