@@ -2,6 +2,10 @@
 
 Abstraction above loading and playing sound, used in [Potion](https://github.com/jansedivy/potion) game engine
 
+## Documentation
+
+- [API](/docs)
+
 ## Installation
 
 - `npm install potion-audio`
