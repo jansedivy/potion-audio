@@ -15,9 +15,17 @@ Abstraction above loading and playing sound, used in [Potion](https://github.com
 ```javascript
 var PotionAudio = require('potion-audio');
 
-var potionAudio = new PotionAudio();
+var manager = new PotionAudio();
 
-potionAudio.load('/music/file.wav', function(audio) {
+manager.setVolume(0.5); // Lowers master volume
+
+master.mute();
+master.unmute();
+master.toggleMute();
+
+master.unmute();
+
+manager('/music/file.wav', function(audio) {
   // Simple
   audio.play();
 
