@@ -3,8 +3,8 @@ var LoadedAudio = require('./loaded-audio');
 var AudioManager = function() {
   var AudioContext = window.AudioContext || window.webkitAudioContext;
 
-  this.ctx = new AudioContext();
-  this.masterGain = this.ctx.createGain();
+  this._ctx = new AudioContext();
+  this._masterGain = this._ctx.createGain();
   this._volume = 1;
   this.isMuted = false;
 
@@ -18,10 +18,10 @@ AudioManager.prototype._enableiOS = function() {
   var self = this;
 
   var touch = function() {
-    var buffer = self.ctx.createBuffer(1, 1, 22050);
-    var source = self.ctx.createBufferSource();
+    var buffer = self._ctx.createBuffer(1, 1, 22050);
+    var source = self._ctx.createBufferSource();
     source.buffer = buffer;
-    source.connect(self.ctx.destination);
+    source.connect(self._ctx.destination);
     source.start(0);
 
     window.removeEventListener('touchstart', touch, false);
@@ -46,12 +46,12 @@ AudioManager.prototype.toggleMute = function() {
 };
 
 AudioManager.prototype._updateMute = function() {
-  this.masterGain.gain.value = this.isMuted ? 0 : this._volume;
+  this._masterGain.gain.value = this.isMuted ? 0 : this._volume;
 };
 
 AudioManager.prototype.setVolume = function(volume) {
   this._volume = volume;
-  this.masterGain.gain.value = volume;
+  this._masterGain.gain.value = volume;
 };
 
 AudioManager.prototype.load = function(url, callback) {
@@ -71,8 +71,8 @@ AudioManager.prototype.load = function(url, callback) {
 AudioManager.prototype.decodeAudioData = function(data, callback) {
   var self = this;
 
-  this.ctx.decodeAudioData(data, function(result) {
-    var audio = new LoadedAudio(self.ctx, result, self.masterGain);
+  this._ctx.decodeAudioData(data, function(result) {
+    var audio = new LoadedAudio(self._ctx, result, self._masterGain);
 
     callback(audio);
   });
