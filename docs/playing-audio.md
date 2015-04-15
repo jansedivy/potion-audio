@@ -26,3 +26,7 @@ Stops currently played audio.
 var playing = sound.play();
 playing.stop();
 ```
+
+### 'loop()'
+
+Sets current playing audio to loop
