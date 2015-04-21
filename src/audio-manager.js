@@ -1,3 +1,4 @@
+var util = require('util');
 var LoadedAudio = require('./loaded-audio');
 
 var AudioManager = function() {
@@ -55,14 +56,41 @@ AudioManager.prototype.setVolume = function(volume) {
 };
 
 AudioManager.prototype.load = function(url, callback) {
+  var loader = {
+    done: function() {},
+    error: function() {},
+    progress: function() {}
+  };
+
+  if (callback && util.isFunction(callback)) {
+    loader.done = callback;
+  } else {
+    if (callback.done) {
+      loader.done = callback.done;
+    }
+
+    if (callback.error) {
+      loader.error = callback.error;
+    }
+
+    if (callback.progress) {
+      loader.progress = callback.progress;
+    }
+  }
+
   var self = this;
 
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
+
+  request.addEventListener('progress', function(e) {
+    loader.progress(e);
+  });
+
   request.onload = function() {
     self.decodeAudioData(request.response, function(source) {
-      callback(source);
+      loader.done(source);
     });
   };
   request.send();
